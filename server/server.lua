@@ -44,7 +44,7 @@ AddEventHandler('rsg-crafting:server:craftshovel', function()
 	local src = source
     local Player = QRCore.Functions.GetPlayer(src)
 	local craftingRep = Player.PlayerData.metadata["craftingrep"]
-	if craftingRep > Config.ShovelRepRequired then
+	if craftingRep >= Config.ShovelRepRequired then
 		-- remove items
 		Player.Functions.RemoveItem('bpcshovel', 1)
 		TriggerClientEvent('inventory:client:ItemBox', src, QRCore.Shared.Items['bpcshovel'], "remove")
@@ -98,7 +98,7 @@ AddEventHandler('rsg-crafting:server:craftaxe', function()
 	local src = source
     local Player = QRCore.Functions.GetPlayer(src)
 	local craftingRep = Player.PlayerData.metadata["craftingrep"]
-	if craftingRep > Config.AxeRepRequired then
+	if craftingRep >= Config.AxeRepRequired then
 		-- remove items
 		Player.Functions.RemoveItem('bpcaxe', 1)
 		TriggerClientEvent('inventory:client:ItemBox', src, QRCore.Shared.Items['bpcaxe'], "remove")
@@ -152,7 +152,7 @@ AddEventHandler('rsg-crafting:server:craftpickaxe', function()
 	local src = source
     local Player = QRCore.Functions.GetPlayer(src)
 	local craftingRep = Player.PlayerData.metadata["craftingrep"]
-	if craftingRep > Config.AxeRepRequired then
+	if craftingRep >= Config.AxeRepRequired then
 		-- remove items
 		Player.Functions.RemoveItem('bpcpickaxe', 1)
 		TriggerClientEvent('inventory:client:ItemBox', src, QRCore.Shared.Items['bpcpickaxe'], "remove")
