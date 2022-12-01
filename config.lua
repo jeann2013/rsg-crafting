@@ -28,11 +28,6 @@ Config.InvensionShopLocations = {
 	{name = 'Invension Shop', location = 'invension-shop1', coords = vector3(2516.7561, 2285.0756, 177.35156),	showblip = true},
 }
 
--- blueprint original shop npc
-Config.CraftingNpc = {
-	[1] = { ["Model"] = "CS_crackpotRobot", ["Pos"] = vector3(2516.7561, 2285.0756, 177.35156 -1), ["Heading"] = 246.71557 }, -- robot
-}
-
 -- crafting locations
 Config.CraftingLocations = {
 	{name = 'Crafting', location = 'crafting-valentine', 	coords = vector3(-369.44, 796.08, 116.2),			showblip = true},

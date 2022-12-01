@@ -6,8 +6,7 @@ author 'RexShack#3041'
 description 'rsg-crafting'
 
 client_script {
-	'client/client.lua',
-	'client/npc.lua'
+	'client/client.lua'
 }
 
 server_scripts {
