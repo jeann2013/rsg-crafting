@@ -13,11 +13,24 @@ Citizen.CreateThread(function()
             event = 'rsg-crafting:client:OpenInvensionShop',
         })
         if v.showblip == true then
-			local StoreBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.coords)
+            local StoreBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.coords)
             SetBlipSprite(StoreBlip, 1475879922, 1)
             SetBlipScale(StoreBlip, 0.2)
-			Citizen.InvokeNative(0x9CB1A1623062F402, StoreBlip, v.name)
+            Citizen.InvokeNative(0x9CB1A1623062F402, StoreBlip, v.name)
         end
+    end
+end)
+
+-- draw marker if set to true in config
+CreateThread(function()
+    while true do
+        local sleep = 0
+        for bpos, v in pairs(Config.InvensionShopLocations) do
+            if v.showmarker == true then
+                Citizen.InvokeNative(0x2A32FAA57B937173, 0x07DCE236, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 215, 0, 155, false, false, false, 1, false, false, false)
+            end
+        end
+        Wait(sleep)
     end
 end)
 
@@ -41,11 +54,24 @@ Citizen.CreateThread(function()
             event = 'rsg-crafting:client:OpenMenu',
         })
         if v.showblip == true then
-			local CraftingBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.coords)
+            local CraftingBlip = Citizen.InvokeNative(0x554D9D53F696D002, 1664425300, v.coords)
             SetBlipSprite(CraftingBlip, 3535996525, 1)
             SetBlipScale(CraftingBlip, 0.2)
-			Citizen.InvokeNative(0x9CB1A1623062F402, CraftingBlip, v.name)
+            Citizen.InvokeNative(0x9CB1A1623062F402, CraftingBlip, v.name)
         end
+    end
+end)
+
+-- draw marker if set to true in config
+CreateThread(function()
+    while true do
+        local sleep = 0
+        for crafting, v in pairs(Config.CraftingLocations) do
+            if v.showmarker == true then
+                Citizen.InvokeNative(0x2A32FAA57B937173, 0x07DCE236, v.coords, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 255, 215, 0, 155, false, false, false, 1, false, false, false)
+            end
+        end
+        Wait(sleep)
     end
 end)
 
@@ -59,7 +85,7 @@ RegisterNetEvent('rsg-crafting:client:OpenMenu', function()
         {
             header = "Craft Shovel",
             icon = "fas fa-cog",
-			txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = "1 x BPC / 3 x Steel / 1 x Wood",
             params = {
                 event = "rsg-crafting:client:craftshovel"
             }
@@ -67,7 +93,7 @@ RegisterNetEvent('rsg-crafting:client:OpenMenu', function()
         {
             header = "Craft Axe",
             icon = "fas fa-cog",
-			txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = "1 x BPC / 3 x Steel / 1 x Wood",
             params = {
                 event = "rsg-crafting:client:craftaxe"
             }
@@ -75,7 +101,7 @@ RegisterNetEvent('rsg-crafting:client:OpenMenu', function()
         {
             header = "Craft PickAxe",
             icon = "fas fa-cog",
-			txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = "1 x BPC / 3 x Steel / 1 x Wood",
             params = {
                 event = "rsg-crafting:client:craftpickaxe"
             }
@@ -88,19 +114,19 @@ end)
 -- make copy from blueprint original
 RegisterNetEvent('rsg-crafting:client:makecopy')
 AddEventHandler('rsg-crafting:client:makecopy', function(bpo, bpc, name)
-	local hasItem = QRCore.Functions.HasItem(bpo, 1)
-	if hasItem then
-		QRCore.Functions.Progressbar('copy-'..name, 'Making a copy of '..name..'..', Config.BPOCopyTime, false, true, {
-			disableMovement = true,
-			disableCarMovement = false,
-			disableMouse = false,
-			disableCombat = true,
-		}, {}, {}, {}, function() -- Done
-			TriggerServerEvent('rsg-crafting:server:givecopy', bpc)
-		end)
-	else
-		QRCore.Functions.Notify('you don\'t have this blueprint original', 'error')
-	end
+    local hasItem = QRCore.Functions.HasItem(bpo, 1)
+    if hasItem then
+        QRCore.Functions.Progressbar('copy-'..name, 'Making a copy of '..name..'..', Config.BPOCopyTime, false, true, {
+            disableMovement = true,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('rsg-crafting:server:givecopy', bpc)
+        end)
+    else
+        QRCore.Functions.Notify('you don\'t have this blueprint original', 'error')
+    end
 end)
 
 --------------------------------------------------------------------------
@@ -108,21 +134,21 @@ end)
 -- shovel crafting
 RegisterNetEvent('rsg-crafting:client:craftshovel')
 AddEventHandler('rsg-crafting:client:craftshovel', function()
-	local hasItem1 = QRCore.Functions.HasItem('bpcshovel', 1)
-	local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-	local hasItem3 = QRCore.Functions.HasItem('wood', 1)
-	if hasItem1 and hasItem2 and hasItem3 then
-		QRCore.Functions.Progressbar("crafting-shovel", "Crafting a Shovel..", Config.ShovelCraftTime, false, true, {
-			disableMovement = true,
-			disableCarMovement = false,
-			disableMouse = false,
-			disableCombat = true,
-		}, {}, {}, {}, function() -- Done
-			TriggerServerEvent('rsg-crafting:server:craftshovel')
-		end)
-	else
-		QRCore.Functions.Notify('need more crafting items!', 'error')
-	end
+    local hasItem1 = QRCore.Functions.HasItem('bpcshovel', 1)
+    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
+    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    if hasItem1 and hasItem2 and hasItem3 then
+        QRCore.Functions.Progressbar("crafting-shovel", "Crafting a Shovel..", Config.ShovelCraftTime, false, true, {
+            disableMovement = true,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('rsg-crafting:server:craftshovel')
+        end)
+    else
+        QRCore.Functions.Notify('need more crafting items!', 'error')
+    end
 end)
 
 --------------------------------------------------------------------------
@@ -130,21 +156,21 @@ end)
 -- axe crafting
 RegisterNetEvent('rsg-crafting:client:craftaxe')
 AddEventHandler('rsg-crafting:client:craftaxe', function()
-	local hasItem1 = QRCore.Functions.HasItem('bpcaxe', 1)
-	local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-	local hasItem3 = QRCore.Functions.HasItem('wood', 1)
-	if hasItem1 and hasItem2 and hasItem3 then
-		QRCore.Functions.Progressbar("crafting-axe", "Crafting a Axe..", Config.AxeCraftTime, false, true, {
-			disableMovement = true,
-			disableCarMovement = false,
-			disableMouse = false,
-			disableCombat = true,
-		}, {}, {}, {}, function() -- Done
-			TriggerServerEvent('rsg-crafting:server:craftaxe')
-		end)
-	else
-		QRCore.Functions.Notify('need more crafting items!', 'error')
-	end
+    local hasItem1 = QRCore.Functions.HasItem('bpcaxe', 1)
+    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
+    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    if hasItem1 and hasItem2 and hasItem3 then
+        QRCore.Functions.Progressbar("crafting-axe", "Crafting a Axe..", Config.AxeCraftTime, false, true, {
+            disableMovement = true,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('rsg-crafting:server:craftaxe')
+        end)
+    else
+        QRCore.Functions.Notify('need more crafting items!', 'error')
+    end
 end)
 
 --------------------------------------------------------------------------
@@ -152,21 +178,21 @@ end)
 -- pickaxe crafting
 RegisterNetEvent('rsg-crafting:client:craftpickaxe')
 AddEventHandler('rsg-crafting:client:craftpickaxe', function()
-	local hasItem1 = QRCore.Functions.HasItem('bpcpickaxe', 1)
-	local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-	local hasItem3 = QRCore.Functions.HasItem('wood', 1)
-	if hasItem1 and hasItem2 and hasItem3 then
-		QRCore.Functions.Progressbar("crafting-pickaxe", "Crafting a PickAxe..", Config.PickAxeCraftTime, false, true, {
-			disableMovement = true,
-			disableCarMovement = false,
-			disableMouse = false,
-			disableCombat = true,
-		}, {}, {}, {}, function() -- Done
-			TriggerServerEvent('rsg-crafting:server:craftpickaxe')
-		end)
-	else
-		QRCore.Functions.Notify('need more crafting items!', 'error')
-	end
+    local hasItem1 = QRCore.Functions.HasItem('bpcpickaxe', 1)
+    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
+    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    if hasItem1 and hasItem2 and hasItem3 then
+        QRCore.Functions.Progressbar("crafting-pickaxe", "Crafting a PickAxe..", Config.PickAxeCraftTime, false, true, {
+            disableMovement = true,
+            disableCarMovement = false,
+            disableMouse = false,
+            disableCombat = true,
+        }, {}, {}, {}, function() -- Done
+            TriggerServerEvent('rsg-crafting:server:craftpickaxe')
+        end)
+    else
+        QRCore.Functions.Notify('need more crafting items!', 'error')
+    end
 end)
 
 --------------------------------------------------------------------------
