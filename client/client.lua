@@ -1,5 +1,5 @@
-local QRCore = exports['qr-core']:GetCoreObject()
-local PlayerData = QRCore.Functions.GetPlayerData()
+local RSGCore = exports['rsg-core']:GetCoreObject()
+local PlayerData = RSGCore.Functions.GetPlayerData()
 local bpos
 local crafting
 
@@ -8,7 +8,7 @@ local crafting
 -- start invension shop
 Citizen.CreateThread(function()
     for bpos, v in pairs(Config.InvensionShopLocations) do
-        exports['qr-core']:createPrompt(v.location, v.coords, QRCore.Shared.Keybinds['J'], 'Open ' .. v.name, {
+        exports['rsg-core']:createPrompt(v.location, v.coords, RSGCore.Shared.Keybinds['J'], 'Open ' .. v.name, {
             type = 'client',
             event = 'rsg-crafting:client:OpenInvensionShop',
         })
@@ -49,7 +49,7 @@ end)
 -- crafting locations
 Citizen.CreateThread(function()
     for crafting, v in pairs(Config.CraftingLocations) do
-        exports['qr-core']:createPrompt(v.location, v.coords, QRCore.Shared.Keybinds['J'], 'Open ' .. v.name, {
+        exports['rsg-core']:createPrompt(v.location, v.coords, RSGCore.Shared.Keybinds['J'], 'Open ' .. v.name, {
             type = 'client',
             event = 'rsg-crafting:client:OpenMenu',
         })
@@ -77,7 +77,7 @@ end)
 
 -- crafting menu
 RegisterNetEvent('rsg-crafting:client:OpenMenu', function()
-    exports['qr-menu']:openMenu({
+    exports['rsg-menu']:openMenu({
         {
             header = "Crafting Menu",
             isMenuHeader = true,
@@ -114,9 +114,9 @@ end)
 -- make copy from blueprint original
 RegisterNetEvent('rsg-crafting:client:makecopy')
 AddEventHandler('rsg-crafting:client:makecopy', function(bpo, bpc, name)
-    local hasItem = QRCore.Functions.HasItem(bpo, 1)
+    local hasItem = RSGCore.Functions.HasItem(bpo, 1)
     if hasItem then
-        QRCore.Functions.Progressbar('copy-'..name, 'Making a copy of '..name..'..', Config.BPOCopyTime, false, true, {
+        RSGCore.Functions.Progressbar('copy-'..name, 'Making a copy of '..name..'..', Config.BPOCopyTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -125,7 +125,7 @@ AddEventHandler('rsg-crafting:client:makecopy', function(bpo, bpc, name)
             TriggerServerEvent('rsg-crafting:server:givecopy', bpc)
         end)
     else
-        QRCore.Functions.Notify('you don\'t have this blueprint original', 'error')
+        RSGCore.Functions.Notify('you don\'t have this blueprint original', 'error')
     end
 end)
 
@@ -134,11 +134,11 @@ end)
 -- shovel crafting
 RegisterNetEvent('rsg-crafting:client:craftshovel')
 AddEventHandler('rsg-crafting:client:craftshovel', function()
-    local hasItem1 = QRCore.Functions.HasItem('bpcshovel', 1)
-    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    local hasItem1 = RSGCore.Functions.HasItem('bpcshovel', 1)
+    local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
+    local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        QRCore.Functions.Progressbar("crafting-shovel", "Crafting a Shovel..", Config.ShovelCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-shovel", "Crafting a Shovel..", Config.ShovelCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -147,7 +147,7 @@ AddEventHandler('rsg-crafting:client:craftshovel', function()
             TriggerServerEvent('rsg-crafting:server:craftshovel')
         end)
     else
-        QRCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify('need more crafting items!', 'error')
     end
 end)
 
@@ -156,11 +156,11 @@ end)
 -- axe crafting
 RegisterNetEvent('rsg-crafting:client:craftaxe')
 AddEventHandler('rsg-crafting:client:craftaxe', function()
-    local hasItem1 = QRCore.Functions.HasItem('bpcaxe', 1)
-    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    local hasItem1 = RSGCore.Functions.HasItem('bpcaxe', 1)
+    local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
+    local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        QRCore.Functions.Progressbar("crafting-axe", "Crafting a Axe..", Config.AxeCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-axe", "Crafting a Axe..", Config.AxeCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -169,7 +169,7 @@ AddEventHandler('rsg-crafting:client:craftaxe', function()
             TriggerServerEvent('rsg-crafting:server:craftaxe')
         end)
     else
-        QRCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify('need more crafting items!', 'error')
     end
 end)
 
@@ -178,11 +178,11 @@ end)
 -- pickaxe crafting
 RegisterNetEvent('rsg-crafting:client:craftpickaxe')
 AddEventHandler('rsg-crafting:client:craftpickaxe', function()
-    local hasItem1 = QRCore.Functions.HasItem('bpcpickaxe', 1)
-    local hasItem2 = QRCore.Functions.HasItem('steel', 3)
-    local hasItem3 = QRCore.Functions.HasItem('wood', 1)
+    local hasItem1 = RSGCore.Functions.HasItem('bpcpickaxe', 1)
+    local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
+    local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        QRCore.Functions.Progressbar("crafting-pickaxe", "Crafting a PickAxe..", Config.PickAxeCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-pickaxe", "Crafting a PickAxe..", Config.PickAxeCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -191,7 +191,7 @@ AddEventHandler('rsg-crafting:client:craftpickaxe', function()
             TriggerServerEvent('rsg-crafting:server:craftpickaxe')
         end)
     else
-        QRCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify('need more crafting items!', 'error')
     end
 end)
 
