@@ -3,11 +3,11 @@ local RSGCore = exports['rsg-core']:GetCoreObject()
 --------------------------------------------------------------------------
 
 -- get crafting rep
-RSGCore.Commands.Add('craftingrep', 'get your crafting reputation', {}, false, function(source)
+RSGCore.Commands.Add('craftingrep',  Lang:t('commands.get_your_crafting_reputation'), {}, false, function(source)
     local src = source
     local Player = RSGCore.Functions.GetPlayer(src)
     local craftingRep = Player.PlayerData.metadata['craftingrep']
-    TriggerClientEvent('RSGCore:Notify', src, 'Your Crafting Rep is: '..craftingRep, 'primary')
+    TriggerClientEvent('RSGCore:Notify', src,  Lang:t('primary.your_crafting_rep_is')..craftingRep, 'primary')
 end)
 
 --------------------------------------------------------------------------
@@ -28,13 +28,13 @@ RSGCore.Functions.CreateUseableItem('bposhovel', function(source, item)
     if craftingRep >= repneeded then
         if cashBalance >= copycost then
             Player.Functions.RemoveMoney("cash", copycost, "copy-bpo")
-            TriggerClientEvent('RSGCore:Notify', src, '$'..copycost..' taken for the copy', 'success')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.taken_for_the_copy',{copycost = copycost}), 'success')
             TriggerClientEvent('rsg-crafting:client:makecopy', src, bpo, bpc, name)
         else 
-            TriggerClientEvent('RSGCore:Notify', src, 'you don\'t have enough cash to do that!', 'error')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.you_dont_have_enough_cash_to_do_that'), 'error')
         end
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough reputation '..repneeded..' required!', 'error')
+        TriggerClientEvent('RSGCore:Notify', src,  Lang:t('error.not_enough_reputation_repneeded_required',{repneeded = repneeded}), 'error')
     end
 end)
 
@@ -56,11 +56,11 @@ AddEventHandler('rsg-crafting:server:craftshovel', function()
         Player.Functions.AddItem('shovel', 1)
         TriggerClientEvent('inventory:client:ItemBox', src, RSGCore.Shared.Items['shovel'], "add")
         Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"] + 1)
-        TriggerClientEvent('RSGCore:Notify', src, 'crafting successful', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.crafting_successful'), 'success')
         Wait(5000)
         TriggerEvent('rsg-crafting:server:craftingrep', src)
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough crafting reputation to make this!', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.not_enough_crafting_reputation_to_make_this'), 'success')
     end
 end)
 
@@ -82,13 +82,13 @@ RSGCore.Functions.CreateUseableItem('bpoaxe', function(source, item)
     if craftingRep >= repneeded then
         if cashBalance >= copycost then
             Player.Functions.RemoveMoney("cash", copycost, "copy-bpo")
-            TriggerClientEvent('RSGCore:Notify', src, '$'..copycost..' taken for the copy', 'success')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.taken_for_the_copy',{copycost = copycost}), 'success')
             TriggerClientEvent('rsg-crafting:client:makecopy', src, bpo, bpc, name)
         else 
-            TriggerClientEvent('RSGCore:Notify', src, 'you don\'t have enough cash to do that!', 'error')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.you_dont_have_enough_cash_to_do_that'), 'error')
         end
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough reputation '..repneeded..' required!', 'error')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.not_enough_reputation_repneeded_required',{repneeded = repneeded}), 'error')
     end
 end)
 
@@ -110,11 +110,11 @@ AddEventHandler('rsg-crafting:server:craftaxe', function()
         Player.Functions.AddItem('axe', 1)
         TriggerClientEvent('inventory:client:ItemBox', src, RSGCore.Shared.Items['axe'], "add")
         Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"] + 1)
-        TriggerClientEvent('RSGCore:Notify', src, 'crafting successful', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.crafting_successful'), 'success')
         Wait(5000)
         TriggerEvent('rsg-crafting:server:craftingrep', src)
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough crafting reputation to make this!', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.not_enough_crafting_reputation_to_make_this'), 'success')
     end
 end)
 
@@ -136,13 +136,13 @@ RSGCore.Functions.CreateUseableItem('bpopickaxe', function(source, item)
     if craftingRep >= repneeded then
         if cashBalance >= copycost then
             Player.Functions.RemoveMoney("cash", copycost, "copy-bpo")
-            TriggerClientEvent('RSGCore:Notify', src, '$'..copycost..' taken for the copy', 'success')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.taken_for_the_copy',{copycost = copycost}), 'success')
             TriggerClientEvent('rsg-crafting:client:makecopy', src, bpo, bpc, name)
         else 
-            TriggerClientEvent('RSGCore:Notify', src, 'you don\'t have enough cash to do that!', 'error')
+            TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.you_dont_have_enough_cash_to_do_that'), 'error')
         end
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough reputation '..repneeded..' required!', 'error')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('error.not_enough_reputation_repneeded_required',{repneeded = repneeded}), 'error')
     end
 end)
 
@@ -164,11 +164,11 @@ AddEventHandler('rsg-crafting:server:craftpickaxe', function()
         Player.Functions.AddItem('pickaxe', 1)
         TriggerClientEvent('inventory:client:ItemBox', src, RSGCore.Shared.Items['pickaxe'], "add")
         Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"] + 1)
-        TriggerClientEvent('RSGCore:Notify', src, 'crafting successful', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.crafting_successful'), 'success')
         Wait(5000)
         TriggerEvent('rsg-crafting:server:craftingrep', src)
     else
-        TriggerClientEvent('RSGCore:Notify', src, 'not enough crafting reputation to make this!', 'success')
+        TriggerClientEvent('RSGCore:Notify', src, Lang:t('success.not_enough_crafting_reputation_to_make_this'), 'success')
     end
 end)
 
@@ -189,5 +189,5 @@ AddEventHandler('rsg-crafting:server:craftingrep', function(source)
     local src = source
     local Player = RSGCore.Functions.GetPlayer(src)
     local curRep = Player.PlayerData.metadata["craftingrep"]
-    TriggerClientEvent('RSGCore:Notify', src, 'Your crafting reputation increased to '.. curRep, 'primary')
+    TriggerClientEvent('RSGCore:Notify', src, Lang:t('primary.your_crafting_reputation_increased_to').. curRep, 'primary')
 end)
