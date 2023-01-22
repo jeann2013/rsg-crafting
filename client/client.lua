@@ -8,7 +8,7 @@ local crafting
 -- start invension shop
 Citizen.CreateThread(function()
     for bpos, v in pairs(Config.InvensionShopLocations) do
-        exports['rsg-core']:createPrompt(v.location, v.coords, RSGCore.Shared.Keybinds['J'], 'Open ' .. v.name, {
+        exports['rsg-core']:createPrompt(v.location, v.coords, RSGCore.Shared.Keybinds['J'], Lang:t('menu.open') .. v.name, {
             type = 'client',
             event = 'rsg-crafting:client:OpenInvensionShop',
         })
@@ -79,29 +79,29 @@ end)
 RegisterNetEvent('rsg-crafting:client:OpenMenu', function()
     exports['rsg-menu']:openMenu({
         {
-            header = "Crafting Menu",
+            header = Lang:t('menu.crafting_menu'),
             isMenuHeader = true,
         },
         {
-            header = "Craft Shovel",
+            header = Lang:t('menu.craft_shovel'),
             icon = "fas fa-cog",
-            txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = Lang:t('text.xbpc_xsteel_xwood'),
             params = {
                 event = "rsg-crafting:client:craftshovel"
             }
         },
         {
-            header = "Craft Axe",
+            header = Lang:t('menu.craft_axe'),
             icon = "fas fa-cog",
-            txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = Lang:t('text.xbpc_xsteel_xwood'),
             params = {
                 event = "rsg-crafting:client:craftaxe"
             }
         },
         {
-            header = "Craft PickAxe",
+            header = Lang:t('menu.craft_pickAxe'),
             icon = "fas fa-cog",
-            txt = "1 x BPC / 3 x Steel / 1 x Wood",
+            txt = Lang:t('text.xbpc_xsteel_xwood'),
             params = {
                 event = "rsg-crafting:client:craftpickaxe"
             }
@@ -116,7 +116,7 @@ RegisterNetEvent('rsg-crafting:client:makecopy')
 AddEventHandler('rsg-crafting:client:makecopy', function(bpo, bpc, name)
     local hasItem = RSGCore.Functions.HasItem(bpo, 1)
     if hasItem then
-        RSGCore.Functions.Progressbar('copy-'..name, 'Making a copy of '..name..'..', Config.BPOCopyTime, false, true, {
+        RSGCore.Functions.Progressbar(Lang:t('progressbar.copy')..name, Lang:t('progressbar.making_copy_of')..name..'..', Config.BPOCopyTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -125,7 +125,7 @@ AddEventHandler('rsg-crafting:client:makecopy', function(bpo, bpc, name)
             TriggerServerEvent('rsg-crafting:server:givecopy', bpc)
         end)
     else
-        RSGCore.Functions.Notify('you don\'t have this blueprint original', 'error')
+        RSGCore.Functions.Notify(Lang:t('error.you_dont_have_this_blueprint_original'), 'error')
     end
 end)
 
@@ -138,7 +138,7 @@ AddEventHandler('rsg-crafting:client:craftshovel', function()
     local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
     local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        RSGCore.Functions.Progressbar("crafting-shovel", "Crafting a Shovel..", Config.ShovelCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-shovel", Lang:t('progressbar.crafting_shovel'), Config.ShovelCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -147,7 +147,7 @@ AddEventHandler('rsg-crafting:client:craftshovel', function()
             TriggerServerEvent('rsg-crafting:server:craftshovel')
         end)
     else
-        RSGCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify(Lang:t('error.need_more_crafting_items'), 'error')
     end
 end)
 
@@ -160,7 +160,7 @@ AddEventHandler('rsg-crafting:client:craftaxe', function()
     local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
     local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        RSGCore.Functions.Progressbar("crafting-axe", "Crafting a Axe..", Config.AxeCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-axe", Lang:t('progressbar.crafting_axe'), Config.AxeCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -169,7 +169,7 @@ AddEventHandler('rsg-crafting:client:craftaxe', function()
             TriggerServerEvent('rsg-crafting:server:craftaxe')
         end)
     else
-        RSGCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify(Lang:t('error.need_more_crafting_items'), 'error')
     end
 end)
 
@@ -182,7 +182,7 @@ AddEventHandler('rsg-crafting:client:craftpickaxe', function()
     local hasItem2 = RSGCore.Functions.HasItem('steel', 3)
     local hasItem3 = RSGCore.Functions.HasItem('wood', 1)
     if hasItem1 and hasItem2 and hasItem3 then
-        RSGCore.Functions.Progressbar("crafting-pickaxe", "Crafting a PickAxe..", Config.PickAxeCraftTime, false, true, {
+        RSGCore.Functions.Progressbar("crafting-pickaxe", Lang:t('progressbar.crafting_pickAxe'), Config.PickAxeCraftTime, false, true, {
             disableMovement = true,
             disableCarMovement = false,
             disableMouse = false,
@@ -191,7 +191,7 @@ AddEventHandler('rsg-crafting:client:craftpickaxe', function()
             TriggerServerEvent('rsg-crafting:server:craftpickaxe')
         end)
     else
-        RSGCore.Functions.Notify('need more crafting items!', 'error')
+        RSGCore.Functions.Notify(Lang:t('error.need_more_crafting_items'), 'error')
     end
 end)
 
