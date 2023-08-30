@@ -6,21 +6,24 @@ author 'RexShack#3041'
 description 'rsg-crafting'
 
 shared_scripts {
-       '@rsg-core/shared/locale.lua',
-       'locales/en.lua',
-       'locales/*.lua',
-       'config.lua',
+    '@ox_lib/init.lua',
+    '@rsg-core/shared/locale.lua',
+    'locales/en.lua',
+    'locales/*.lua',
+    'config.lua',
 }
 
 client_script {
     'client/client.lua'
 }
 
-server_scripts {
-       'server/server.lua',
+server_script {
+    'server/server.lua'
 }
 
-dependency 'rsg-core'
-dependency 'rsg-menu'
+dependencies {
+    'rsg-core',
+    'ox_lib',
+}
 
 lua54 'yes'
