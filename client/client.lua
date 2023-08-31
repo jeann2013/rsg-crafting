@@ -76,7 +76,8 @@ AddEventHandler('rsg-crafting:client:craftingmenu', function()
             title = category,
             description = 'Explore the recipes for ' .. category,
             icon = 'fa-solid fa-pen-ruler',
-            event = 'rsg-crafting:client:' .. category
+            event = 'rsg-crafting:client:' .. category,
+            arrow = true
         })
     end
 
