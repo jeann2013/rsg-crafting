@@ -21,8 +21,12 @@ end)
 
 ------------------------------------------------------------------------------------------------------
 
+-- create a table to store menu options by category
+local categoryMenus = {}
+
+-- iterate through recipes and organize them by category
 for _, v in ipairs(Config.Crafting) do
-    table.insert(options, {
+    local option = {
         title = v.title,
         description = v.description,
         icon = 'fa-solid fa-pen-ruler',
@@ -34,16 +38,50 @@ for _, v in ipairs(Config.Crafting) do
             receive = v.receive,
             giveamount = v.giveamount
         }
-    })
+    }
+
+    -- check if a menu already exists for this category
+    if not categoryMenus[v.category] then
+        categoryMenus[v.category] = {
+            id = 'crafting_menu_' .. v.category,
+            title = 'Crafting Menu - ' .. v.category,
+            options = { option }
+        }
+    else
+        table.insert(categoryMenus[v.category].options, option)
+    end
 end
 
-RegisterNetEvent('rsg-crafting:client:craftingmenu', function()
-    lib.registerContext({
+-- log menu events by category
+for category, menuData in pairs(categoryMenus) do
+    RegisterNetEvent('rsg-crafting:client:' .. category)
+    AddEventHandler('rsg-crafting:client:' .. category, function()
+        lib.registerContext(menuData)
+        lib.showContext(menuData.id)
+    end)
+end
+
+-- main event to open main menu
+RegisterNetEvent('rsg-crafting:client:craftingmenu')
+AddEventHandler('rsg-crafting:client:craftingmenu', function()
+    -- show main menu with categories
+    local mainMenu = {
         id = 'crafting_menu',
         title = 'Crafting Menu',
-        options = options
-    })
-    lib.showContext('crafting_menu')
+        options = {}
+    }
+
+    for category, menuData in pairs(categoryMenus) do
+        table.insert(mainMenu.options, {
+            title = category,
+            description = 'Explore the recipes for ' .. category,
+            icon = 'fa-solid fa-pen-ruler',
+            event = 'rsg-crafting:client:' .. category
+        })
+    end
+
+    lib.registerContext(mainMenu)
+    lib.showContext(mainMenu.id)
 end)
 
 ------------------------------------------------------------------------------------------------------
