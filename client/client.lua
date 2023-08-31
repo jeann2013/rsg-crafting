@@ -45,6 +45,8 @@ for _, v in ipairs(Config.Crafting) do
         categoryMenus[v.category] = {
             id = 'crafting_menu_' .. v.category,
             title = 'Crafting Menu - ' .. v.category,
+            menu = 'crafting_menu',
+            onBack = function() end,
             options = { option }
         }
     else
