@@ -18,7 +18,6 @@ Config.Crafting = {
 
     {
         title =  'Shovel',
-        description = '3 x Steel & 1 x Wood',
         category = 'tools',
         crafttime = 30000,
         ingredients = { 
@@ -30,7 +29,6 @@ Config.Crafting = {
     },
     {
         title =  'Axe',
-        description = '3 x Steel & 1 x Wood',
         category = 'tools',
         crafttime = 30000,
         ingredients = { 
@@ -42,7 +40,6 @@ Config.Crafting = {
     },
     {
         title =  'Pickaxe',
-        description = '3 x Steel & 1 x Wood',
         category = 'tools',
         crafttime = 30000,
         ingredients = { 
