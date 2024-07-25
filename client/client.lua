@@ -113,6 +113,7 @@ end)
 
 -- do crafting
 RegisterNetEvent('rsg-crafting:client:craftitem', function(title, ingredients, crafttime, receive, giveamount)
+LocalPlayer.state:set("inv_busy", true, true)
     RSGCore.Functions.Progressbar('cook-meal', Lang:t('progressbar.crafting_a')..title, crafttime, false, true, {
         disableMovement = true,
         disableCarMovement = false,
@@ -120,6 +121,7 @@ RegisterNetEvent('rsg-crafting:client:craftitem', function(title, ingredients, c
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
         TriggerServerEvent('rsg-crafting:server:finishcrafting', ingredients, receive, giveamount)
+	LocalPlayer.state:set("inv_busy", false, true)
     end)
 end)
 
